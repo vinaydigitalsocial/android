@@ -4,6 +4,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -12,13 +15,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.suvisavi.expensesphone.ExpensesPhoneHelper;
+import com.suvisavi.expensesphone.database.ExpensesDataBaseHelper;
+import com.suvisavi.expensesphone.fragments.GroupPageFragment;
+import com.suvisavi.expensesphone.helpers.ExpensesPhoneHelper;
 import com.suvisavi.expensesphone.R;
 import com.suvisavi.expensesphone.fragments.NavigationDrawerFragment;
 
 
 public class ExpensesPhoneActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        GroupPageFragment.OnFragmentInteractionListener{
 
 
     private final String CLASSNAME = getClass().getSimpleName();
@@ -36,11 +42,18 @@ public class ExpensesPhoneActivity extends Activity
      */
     private CharSequence mTitle;
 
+
+    private ExpensesDataBaseHelper expensesDataBaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("enter : " + CLASSNAME + " method : onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expenses_phone);
+
+        expensesDataBaseHelper = new ExpensesDataBaseHelper(getApplicationContext());
+        expensesDataBaseHelper.insertDummyData();
+
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -58,9 +71,17 @@ public class ExpensesPhoneActivity extends Activity
         System.out.println("enter : " + CLASSNAME + " method : onNavigationDrawerItemSelected");
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+
+        if(position == 0){
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, GroupPageFragment.newInstance(position + 1))
+                    .commit();
+        }else{
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                    .commit();
+        }
+
         System.out.println("exit : " + CLASSNAME + " method : onNavigationDrawerItemSelected");
     }
 
@@ -86,6 +107,8 @@ public class ExpensesPhoneActivity extends Activity
     public void restoreActionBar() {
         System.out.println("enter : " + CLASSNAME + " method : restoreActionBar");
         ActionBar actionBar = getActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ceb0ea")));
+        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
         System.out.println("exit : " + CLASSNAME + " method : restoreActionBar");
@@ -121,6 +144,11 @@ public class ExpensesPhoneActivity extends Activity
         }
         System.out.println("exit : " + CLASSNAME + " method : onOptionsItemSelected");
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**

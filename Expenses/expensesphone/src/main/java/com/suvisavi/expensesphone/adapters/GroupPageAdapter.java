@@ -9,9 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.suvisavi.expensesphone.R;
-import com.suvisavi.expensesphone.com.suvisavi.expensesphone.datasource.GroupPageData;
+import com.suvisavi.expensesphone.model.GroupPageData;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -20,12 +20,14 @@ import java.util.List;
 public class GroupPageAdapter extends ArrayAdapter {
 
 
-    private List<GroupPageData> groupPageData = getData();
+    private List<GroupPageData> groupPageData;
     private Context mContext;
 
 
-    public GroupPageAdapter(Context context,int resource, ArrayList<GroupPageData> list) {
+    public GroupPageAdapter(Context context,int resource, List<GroupPageData> list) {
         super(context, resource, list);
+        groupPageData = list;
+        mContext = context;
     }
 
 
@@ -59,39 +61,20 @@ public class GroupPageAdapter extends ArrayAdapter {
 
         TextView txtViewName = (TextView)view.findViewById(R.id.group_name);
         txtViewName.setText(groupPageData.get(position).getGroupName());
+        txtViewName.setTextColor(Color.BLACK);
         txtViewName.setAllCaps(true);
 
 
-        TextView txtViewAmount = (TextView)view.findViewById(R.id.group_amount);
-        txtViewAmount.setText(groupPageData.get(position).getAmount());
-        txtViewAmount.setHighlightColor(Color.MAGENTA);
+        TextView txtViewPay = (TextView)view.findViewById(R.id.group_pay);
+        txtViewPay.setText(groupPageData.get(position).getPay());
+        txtViewPay.setTextColor(Color.RED);
+
+
+        TextView txtViewReceive = (TextView)view.findViewById(R.id.group_receive);
+        txtViewReceive.setText(groupPageData.get(position).getReceive());
+        txtViewReceive.setHighlightColor(Color.GREEN);
 
         return view;
     }
-
-    private List<GroupPageData> getData(){
-        List<GroupPageData> groupPageData = new ArrayList<GroupPageData>();
-
-        /**
-         * hard coded for now
-         * 1. read from local sqlite database and populate the objects
-         * 2. Once online integration is complete read from the web service response.
-         *
-         */
-        for(int i=0;i<5;i++){
-
-            GroupPageData grpData = new GroupPageData();
-            grpData.setAmount("10");
-            grpData.setGroupName("Group "+ i+1);
-            groupPageData.add(grpData);
-
-        }
-
-        return groupPageData;
-
-    }
-
-
-
 
 }

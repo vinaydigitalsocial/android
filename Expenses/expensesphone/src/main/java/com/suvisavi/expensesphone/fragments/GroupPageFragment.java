@@ -1,15 +1,23 @@
 package com.suvisavi.expensesphone.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.suvisavi.expensesphone.R;
+import com.suvisavi.expensesphone.activities.ExpensesPhoneActivity;
+import com.suvisavi.expensesphone.adapters.GroupPageAdapter;
+import com.suvisavi.expensesphone.database.ExpensesDataBaseHelper;
+import com.suvisavi.expensesphone.model.GroupPageData;
+import com.suvisavi.expensesphone.model.GroupsModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,29 +30,27 @@ import com.suvisavi.expensesphone.R;
 public class GroupPageFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "position";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int mParam1=0;
 
     private OnFragmentInteractionListener mListener;
+    private ListView mGroupPageListView;
+    private List<GroupPageData> groupPageData;
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param position
      * @return A new instance of fragment GroupPageFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static GroupPageFragment newInstance(String param1, String param2) {
+    public static GroupPageFragment newInstance(int position) {
         GroupPageFragment fragment = new GroupPageFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_PARAM1, position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,17 +63,24 @@ public class GroupPageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getInt(ARG_PARAM1);
         }
+
+        groupPageData = getData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(R.string.hello_blank_fragment);
-        return textView;
+        mGroupPageListView = (ListView) inflater.inflate(R.layout.group_page_listview,container,false);
+
+        mGroupPageListView.setAdapter(
+                new GroupPageAdapter(
+                        getActivity().getApplicationContext(),
+                        R.layout.group_page_fragment,
+                        groupPageData));
+
+        return mGroupPageListView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -82,6 +95,10 @@ public class GroupPageFragment extends Fragment {
         super.onAttach(activity);
         try {
             mListener = (OnFragmentInteractionListener) activity;
+
+            ((ExpensesPhoneActivity) activity).onSectionAttached(
+                    getArguments().getInt(ARG_PARAM1));
+
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -107,6 +124,35 @@ public class GroupPageFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+
+
+
+    private List<GroupPageData> getData(){
+        List<GroupPageData> groupPageData = new ArrayList<GroupPageData>();
+
+        ExpensesDataBaseHelper expensesDataBaseHelper = new ExpensesDataBaseHelper(getActivity().getApplicationContext());
+        List<GroupsModel> groupsModelList = expensesDataBaseHelper.getGroupsData();
+
+        /**
+         * hard coded for now
+         * 1. read from local sqlite database and populate the objects
+         * 2. Once online integration is complete read from the web service response.
+         *
+         */
+        for(GroupsModel groupsModel : groupsModelList){
+
+            GroupPageData grpData = new GroupPageData();
+            grpData.setPay("10");
+            grpData.setReceive("100");
+            grpData.setGroupName(groupsModel.getGroupName());
+            groupPageData.add(grpData);
+
+        }
+
+        return groupPageData;
+
     }
 
 }

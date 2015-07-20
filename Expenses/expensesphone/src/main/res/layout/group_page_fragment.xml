@@ -8,15 +8,57 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    tools:context=".ExpensesPhoneActivity$PlaceHolderFragment">
+    android:layout_marginTop="10dp"
+    android:background="@color/background_color"
+    android:paddingTop="5dp"
+    tools:context=".GroupPageFragment">
+
+    <Button
+        android:id="@+id/details"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textStyle="bold|italic"
+        android:text="Details" />
 
 
     <TextView
-        android:id="@+id/id_group_page"
+        android:id="@+id/group_receive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/group_page"/>
+        android:layout_marginRight="33dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/details"
+        android:textColor="#008800"
+        android:textStyle="normal"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/group_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="33dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/group_receive"
+        android:textColor="#880000"
+        android:textStyle="normal"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="3dp"
+        android:maxEms="10"
+        android:layout_weight="1"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff401395"
+        android:textStyle="bold"
+        android:textSize="16dp"/>
+
+
 
 </RelativeLayout>

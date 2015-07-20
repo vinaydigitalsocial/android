@@ -1,1 +1,1 @@
-include ':app', ':expenses_backend'
+include ':app', ':expenses_backend', ':expensesphone'

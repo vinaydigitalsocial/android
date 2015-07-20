@@ -1,14 +1,31 @@
 <resources>
     <string name="app_name">ExpensesPhone</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Register</string>
+    <string name="title_section2">Login</string>
+    <string name="title_section3">Sign Out</string>
+    <string name="title_Home">Groups</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_example">Example action</string>
+    <string name="action_example">Actions</string>
 
     <string name="action_settings">Settings</string>
+
+
+    <!-- Group Page strings-->
+
+    <string name="group_page">Group View</string>
+
+
+    <!-- New Group Page Strings-->
+    <string name="new_group_page">New Group View</string>
+
+
+
+    <!-- colors for the app-->
+    <color name="background_color">#dddddd</color>
+    <color name="details_button_color">#ffbda6c0</color>
+    <color name="details_button_color_dummy">#ff9fc0bf</color>
 </resources>

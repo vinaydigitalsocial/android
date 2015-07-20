@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Expenses.iml" filepath="$PROJECT_DIR$/Expenses.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/expenses_backend/expenses_backend.iml" filepath="$PROJECT_DIR$/expenses_backend/expenses_backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/expensesphone/expensesphone.iml" filepath="$PROJECT_DIR$/expensesphone/expensesphone.iml" />
     </modules>
   </component>
 </project>
